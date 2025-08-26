@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Alquileres - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Mis Alquileres ( )</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Historial de Alquileres</h2>
+    </div>
+    <div class="card-body">
+        {% if alquileres %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Bicicleta</th>
+                    <th>Fecha Inicio</th>
+                    <th>Horas</th>
+                    <th>Costo Total</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alquiler in alquileres %}
+                <tr>
+                    <td>Specialized Montaña XC</td>
+                    <td>15/01/2024 10:30</td>
+                    <td>3 horas</td>
+                    <td>$9,000</td>
+                    <td>
+                        <span style="color: green;">Activo</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div style="text-align: center; padding: 2rem;">
+            <h3>No tienes alquileres registrados</h3>
+            <p>Esta es una  stración del sistema de alquileres.</p>
+            <a href="{{ url_for('lista_bicicletas') }}" class="btn btn-success">Ver Bicicletas Disponibles</a>
+        </div>
+        {% endif %}
+        
+        <div style="background: #e2e3e5; padding: 1rem; border-radius: 5px; margin-top: 2rem;">
+            <p>Los datos de alquileres son de ejemplo</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

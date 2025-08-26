@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Bicicletas - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Gestión de Bicicletas</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Inventario de Bicicletas</h2>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Marca/Modelo</th>
+                    <th>Tipo</th>
+                    <th>Precio/Hora</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bicicleta in bicicletas %}
+                <tr>
+                    <td>{{ bicicleta.id }}</td>
+                    <td>{{ bicicleta.marca }} {{ bicicleta.modelo }}</td>
+                    <td>{{ bicicleta.tipo }}</td>
+                    <td>${{ bicicleta.precio_hora }}</td>
+                    <td>
+                        <span style="color: {% if bicicleta.estado == 'disponible' %}green{% else %}red{% endif %};">
+                            {{ bicicleta.estado }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div style="background: #e2e3e5; padding: 1rem; border-radius: 5px; margin-top: 2rem;">
+            <p>Datos de bicicletas de ejemplo para  demostración</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

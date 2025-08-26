@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ bicicleta.marca }} {{ bicicleta.modelo }} - BiciSena{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+            <div style="flex: 1; min-width: 300px;">
+                <img src="{{ bicicleta.imagen_url }}" alt="{{ bicicleta.marca }} {{ bicicleta.modelo }}" style="width: 100%; border-radius: 8px;">
+            </div>
+            <div style="flex: 2; min-width: 300px;">
+                <h1>{{ bicicleta.marca }} {{ bicicleta.modelo }}</h1>
+                <p><strong>Tipo:</strong> {{ bicicleta.tipo }}</p>
+                <p><strong>Color:</strong> {{ bicicleta.color }}</p>
+                <p><strong>Precio por hora:</strong> ${{ bicicleta.precio_hora }}</p>
+                <p><strong>Estado:</strong> 
+                    <span style="color: {% if bicicleta.estado == 'disponible' %}green{% else %}red{% endif %};">
+                        {{ bicicleta.estado|capitalize }}
+                    </span>
+                </p>
+                
+                <p><strong>Descripción:</strong><br>{{ bicicleta.descripcion }}</p>
+                
+                {% if bicicleta.estado == 'disponible' and 'user_id' in session %}
+                    <a href="{{ url_for('alquilar', bicicleta_id=bicicleta.id) }}" class="btn btn-success">Alquilar esta bicicleta</a>
+                {% elif bicicleta.estado != 'disponible' %}
+                    <button class="btn" disabled>No disponible para alquiler</button>
+                {% endif %}
+                
+                <a href="{{ url_for('bicicletas') }}" class="btn">Volver al listado</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Bicicletas Disponibles - BiciSena{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold text-dark">
+            <i class="fa-solid fa-bicycle text-success me-2"></i>Bicicletas Disponibles
+        </h1>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card mb-4 border-0 shadow-sm rounded-4">
+        <div class="card-body">
+            <h5 class="fw-semibold mb-3">
+                <i class="fa-solid fa-filter text-success me-2"></i>Filtrar por tipo:
+            </h5>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ url_for('bicicletas') }}" class="btn {% if not tipo_filtro %}btn-success{% else %}btn-outline-success{% endif %} rounded-3">
+                    Todas
+                </a>
+                <a href="{{ url_for('bicicletas') }}?tipo=urbana" class="btn {% if tipo_filtro == 'urbana' %}btn-success{% else %}btn-outline-success{% endif %} rounded-3">
+                    Urbanas
+                </a>
+                <a href="{{ url_for('bicicletas') }}?tipo=montaña" class="btn {% if tipo_filtro == 'montaña' %}btn-success{% else %}btn-outline-success{% endif %} rounded-3">
+                    Montaña
+                </a>
+                <a href="{{ url_for('bicicletas') }}?tipo=carrera" class="btn {% if tipo_filtro == 'carrera' %}btn-success{% else %}btn-outline-success{% endif %} rounded-3">
+                    Carrera
+                </a>
+                <a href="{{ url_for('bicicletas') }}?tipo=hibrida" class="btn {% if tipo_filtro == 'hibrida' %}btn-success{% else %}btn-outline-success{% endif %} rounded-3">
+                    Híbridas
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid de bicicletas -->
+    {% if bicicletas %}
+    <div class="row g-4">
+        {% for bicicleta in bicicletas %}
+        <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="position-relative">
+                    <img src="{{ bicicleta.imagen_url or '/static/images/default-bike.jpg' }}" 
+                         class="card-img-top rounded-top-4" 
+                         alt="{{ bicicleta.marca }} {{ bicicleta.modelo }}"
+                         style="height: 200px; object-fit: cover;">
+                    <span class="position-absolute top-0 end-0 m-2 badge bg-success rounded-pill">
+                        ${{ bicicleta.precio_hora }}/hora
+                    </span>
+                </div>
+                
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold text-dark mb-2">
+                        {{ bicicleta.marca }} {{ bicicleta.modelo }}
+                    </h5>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">
+                            {{ bicicleta.tipo }}
+                        </span>
+                        <span class="badge {% if bicicleta.estado == 'disponible' %}bg-success{% else %}bg-danger{% endif %} rounded-pill">
+                            {{ bicicleta.estado }}
+                        </span>
+                    </div>
+                    
+                    <p class="text-muted small mb-3">
+                        <i class="fa-solid fa-palette me-1"></i>Color: {{ bicicleta.color }}
+                    </p>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('detalle_bicicleta', id=bicicleta.id) }}" 
+                           class="btn btn-outline-success rounded-3">
+                            <i class="fa-solid fa-eye me-2"></i>Ver Detalles
+                        </a>
+                        <a href="{{ url_for('alquilar_bicicleta', bicicleta_id=bicicleta.id) }}" 
+                           class="btn btn-success rounded-3">
+                            <i class="fa-solid fa-cart-plus me-2"></i>Alquilar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body text-center py-5">
+            <i class="fa-solid fa-bicycle fa-3x text-muted mb-3"></i>
+            <h4 class="text-dark mb-2">No hay bicicletas disponibles</h4>
+            <p class="text-muted mb-4">No encontramos bicicletas con los filtros seleccionados.</p>
+            <a href="{{ url_for('bicicletas') }}" class="btn btn-success rounded-3">
+                <i class="fa-solid fa-rotate-left me-2"></i>Ver todas las bicicletas
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

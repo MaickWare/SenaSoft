@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión - BiciSena{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-lg rounded-4">
+            <div class="card-header bg-success text-white text-center py-4">
+                <i class="fa-solid fa-lock fa-2x mb-3"></i>
+                <h2 class="mb-0">Inicio de Sesión</h2>
+            </div>
+            
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <h4 class="text-dark mb-3">Sistema de Autenticación</h4>
+                    <p class="text-muted">Accede al sistema de gestión de bicicletas</p>
+                </div>
+
+                <div class="alert alert-info border-0 rounded-3 mb-4">
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-info-circle me-2"></i>
+                        <div>
+                            <strong>Credenciales de demostración</strong><br>
+                            Usuario: <code>admin@sena.edu.co</code><br>
+                            Contraseña: <code>admin123</code>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="demo-form">
+                    <div class="form-group mb-4">
+                        <label class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" value="admin@sena.edu.co" readonly>
+                    </div>
+                    
+                    <div class="form-group mb-4">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" value="••••••••" readonly>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('admin') }}" class="btn btn-success btn-lg rounded-3">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i>Acceder como Administrador
+                        </a>
+                        <a href="{{ url_for('perfil') }}" class="btn btn-outline-success btn-lg rounded-3">
+                            <i class="fa-solid fa-user me-2"></i>Acceder como Usuario
+                        </a>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted mb-0">
+                        ¿No tienes cuenta? 
+                        <a href="{{ url_for('register') }}" class="text-success text-decoration-none">
+                            Regístrate aquí
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

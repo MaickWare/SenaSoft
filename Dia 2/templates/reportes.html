@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Reportes - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Reportes y Estadísticas</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Ingresos Mensuales</h2>
+    </div>
+    <div class="card-body">
+        <h3>Total ingresos este mes: ${{ ingresos_mensuales }}</h3>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Bicicletas Más Populares</h2>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Puesto</th>
+                    <th>Bicicleta</th>
+                    <th>Veces Alquilada</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(bicicletas_populares|length) %}
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ bicicletas_populares[i][0] }} {{ bicicletas_populares[i][1] }}</td>
+                    <td>{{ bicicletas_populares[i][2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Alquileres - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Gestión de Alquileres</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Historial de Alquileres</h2>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Bicicleta</th>
+                    <th>Horas</th>
+                    <th>Costo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alquiler in alquileres %}
+                <tr>
+                    <td>{{ alquiler.id }}</td>
+                    <td>Juan Pérez</td>
+                    <td>Specialized Montaña XC</td>
+                    <td>{{ alquiler.horas_alquiler }}</td>
+                    <td>${{ alquiler.costo_total }}</td>
+                    <td>
+                        <span style="color: green;">{{ alquiler.estado }}</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div style="background: #e2e3e5; padding: 1rem; border-radius: 5px; margin-top: 2rem;">
+            <p>Sistema de gestión de alquileres de demostración</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

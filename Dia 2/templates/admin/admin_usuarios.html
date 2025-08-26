@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Usuarios - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Gestión de Usuarios</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Usuarios del Sistema</h2>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Tipo</th>
+                    <th>Documento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>
+                       
+                            {{ usuario.tipo }}
+                        </span>
+                    </td>
+                    <td>{{ usuario.documento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div style="background: #e2e3e5; padding: 1rem; border-radius: 5px; margin-top: 2rem;">
+            <p>Panel administrativo de demostración</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

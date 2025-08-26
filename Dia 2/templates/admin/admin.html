@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Administración - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Panel de Administración</h1>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-number">{{ total_bicicletas }}</div>
+        <div class="stat-label">Total Bicicletas</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ bicicletas_disponibles }}</div>
+        <div class="stat-label">Bicicletas Disponibles</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ total_usuarios }}</div>
+        <div class="stat-label">Usuarios Registrados</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ alquileres_activos }}</div>
+        <div class="stat-label">Alquileres Activos</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Acciones Rápidas</h2>
+    </div>
+    <div class="card-body">
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{{ url_for('admin_usuarios') }}" class="btn">Gestionar Usuarios</a>
+            <a href="{{ url_for('admin_bicicletas') }}" class="btn">Gestionar Bicicletas</a>
+            <a href="{{ url_for('admin_alquileres') }}" class="btn">Ver Todos los Alquileres</a>
+            <a href="{{ url_for('reportes') }}" class="btn">Ver Reportes</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

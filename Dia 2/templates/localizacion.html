@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Localización - BiciSena{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Sistema de Localización</h2>
+    </div>
+    <div class="card-body">
+        <div style="margin-bottom: 20px;">
+            <button onclick="obtenerUbicacion()" class="btn">
+                Obtener mi ubicación
+            </button>
+            <div id="ubicacion-info" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-radius: 5px; display: none;">
+                <h4>Tu ubicación actual:</h4>
+                <p id="coordenadas"></p>
+            </div>
+        </div>
+
+        <h3>Bicicletas en el sistema:</h3>
+        <div class="bicicletas-grid">
+            {% for bicicleta in bicicletas %}
+            <div class="bicicleta-card">
+                <div class="bicicleta-info">
+                    <h4>{{ bicicleta.marca }} {{ bicicleta.modelo }}</h4>
+                    <p><strong>Tipo:</strong> {{ bicicleta.tipo }}</p>
+                    <p><strong>Estado:</strong> 
+                        <span style="color: {% if bicicleta.estado == 'disponible' %}green{% else %}red{% endif %};">
+                            {{ bicicleta.estado }}
+                        </span>
+                    </p>
+                    <p><strong>Ubicación:</strong> {{ bicicleta.direccion }}</p>
+                    <p><strong>Coordenadas:</strong> {{ bicicleta.latitud }}, {{ bicicleta.longitud }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+function obtenerUbicacion() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                
+                document.getElementById('coordenadas').textContent = 
+                    `Latitud: ${lat.toFixed(6)}, Longitud: ${lng.toFixed(6)}`;
+                document.getElementById('ubicacion-info').style.display = 'block';
+                
+                alert('Ubicación obtenida correctamente');
+            },
+            function(error) {
+                alert('No se pudo obtener la ubicación. Asegúrate de permitir el acceso.');
+            }
+        );
+    } else {
+        alert('Tu navegador no soporta geolocalización');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Alquilar {{ bicicleta.marca }} {{ bicicleta.modelo }} - BiciSena{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Alquilar: {{ bicicleta.marca }} {{ bicicleta.modelo }}</h2>
+    </div>
+    <div class="card-body">
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+            <div style="flex: 1; min-width: 250px;">
+                <img src="{{ bicicleta.imagen_url }}" alt="{{ bicicleta.marca }} {{ bicicleta.modelo }}" style="width: 100%; border-radius: 8px;">
+                <p><strong>Precio por hora:</strong> ${{ bicicleta.precio_hora }}</p>
+            </div>
+            <div style="flex: 2; min-width: 300px;">
+                <form method="POST" action="{{ url_for('alquilar', bicicleta_id=bicicleta.id) }}">
+                    <div class="form-group">
+                        <label for="horas">Número de horas para alquilar:</label>
+                        <input type="number" class="form-control" id="horas" name="horas" min="1" max="72" value="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <p><strong>Costo total estimado:</strong> <span id="costo-total">${{ bicicleta.precio_hora }}</span></p>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">Confirmar Alquiler</button>
+                    <a href="{{ url_for('detalle_bicicleta', id=bicicleta.id) }}" class="btn">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Calcular costo total en tiempo real
+    document.getElementById('horas').addEventListener('input', function() {
+        const horas = this.value;
+        const precioHora = {{ bicicleta.precio_hora }};
+        const costoTotal = horas * precioHora;
+        document.getElementById('costo-total').textContent = '$' + costoTotal.toFixed(2);
+    });
+</script>
+{% endblock %}
