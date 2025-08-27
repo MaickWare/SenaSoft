@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-section mb-5">
+    <div class="card border-0 rounded-4 shadow-lg">
+        <div class="card-body text-center py-5">
+            <div class="mb-4">
+                <i class="fa-solid fa-bicycle fa-3x text-success mb-3"></i>
+                <h1 class="fw-bold text-dark mb-3">BiciSena</h1>
+                <p class="lead text-muted mb-4">
+                    Sistema moderno de alquiler de bicicletas para el SENA
+                </p>
+            </div>
+            
+            <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                <a href="{{ url_for('bicicletas') }}" class="btn btn-success btn-lg px-4 py-2">
+                    <i class="fa-solid fa-bicycle me-2"></i>Ver Bicicletas
+                </a>
+                <a href="{{ url_for('localizacion') }}" class="btn btn-outline-success btn-lg px-4 py-2">
+                    <i class="fa-solid fa-map-marker-alt me-2"></i>Ver Localización
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="featured-bikes">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark">
+            <i class="fa-solid fa-star text-warning me-2"></i>Bicicletas Destacadas
+        </h2>
+        <a href="{{ url_for('bicicletas') }}" class="btn btn-outline-success btn-sm">
+            Ver todas <i class="fa-solid fa-arrow-right ms-1"></i>
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for bicicleta in bicicletas %}
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="bicicleta-img-container position-relative">
+                    <img src="{{ bicicleta.imagen_url or '/static/images/bike4.png' }}" 
+                         class="card-img-top rounded-top-4" 
+                         alt="{{ bicicleta.marca }} {{ bicicleta.modelo }}"
+                         style="height: 200px; object-fit: cover;">
+                    <span class="position-absolute top-0 end-0 m-3 badge bg-success">
+                        ${{ bicicleta.precio_hora }}/hora
+                    </span>
+                </div>
+                
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold text-dark mb-2">
+                        {{ bicicleta.marca }} {{ bicicleta.modelo }}
+                    </h5>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary-light text-primary rounded-pill">
+                            {{ bicicleta.tipo }}
+                        </span>
+                        <span class="badge {% if bicicleta.estado == 'disponible' %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ bicicleta.estado }}
+                        </span>
+                    </div>
+                    
+                    <a href="{{ url_for('detalle_bicicleta', id=bicicleta.id) }}" 
+                       class="btn btn-success w-100 rounded-3">
+                        <i class="fa-solid fa-eye me-2"></i>Ver Detalles
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="stats-section mt-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="stat-card text-center">
+                <i class="fa-solid fa-bicycle fa-2x text-success mb-3"></i>
+                <h3 class="stat-number">{{ bicicletas|length }}</h3>
+                <p class="stat-label">Bicicletas Totales</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card text-center">
+                <i class="fa-solid fa-check-circle fa-2x text-success mb-3"></i>
+                <h3 class="stat-number">{{ bicicletas|selectattr('estado', 'equalto', 'disponible')|list|length }}</h3>
+                <p class="stat-label">Disponibles</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card text-center">
+                <i class="fa-solid fa-users fa-2x text-success mb-3"></i>
+                <h3 class="stat-number">2</h3>
+                <p class="stat-label">Usuarios Activos</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

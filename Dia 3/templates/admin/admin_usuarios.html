@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Gestionar Usuarios - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Gestión de Usuarios</h1>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Tipo</th>
+                    <th>Documento</th>
+                    <th>Fecha Registro</th>
+                    <th>Alquileres</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.tipo }}</td>
+                    <td>{{ usuario.documento }}</td>
+                    <td>{{ usuario.created_at.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ usuario.alquileres|length }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

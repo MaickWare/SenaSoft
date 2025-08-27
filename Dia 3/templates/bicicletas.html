@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Bicicletas Disponibles - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Bicicletas Disponibles</h1>
+
+<div class="filters">
+    <h3>Filtrar por tipo:</h3>
+    <a href="{{ url_for('bicicletas') }}" class="btn {% if not tipo_filtro %}btn-success{% endif %}">Todas</a>
+    <a href="{{ url_for('bicicletas') }}?tipo=urbana" class="btn {% if tipo_filtro == 'urbana' %}btn-success{% endif %}">Urbanas</a>
+    <a href="{{ url_for('bicicletas') }}?tipo=montaña" class="btn {% if tipo_filtro == 'montaña' %}btn-success{% endif %}">Montaña</a>
+    <a href="{{ url_for('bicicletas') }}?tipo=carrera" class="btn {% if tipo_filtro == 'carrera' %}btn-success{% endif %}">Carrera</a>
+    <a href="{{ url_for('bicicletas') }}?tipo=hibrida" class="btn {% if tipo_filtro == 'hibrida' %}btn-success{% endif %}">Híbridas</a>
+</div>
+
+<div class="bicicletas-grid">
+    {% for bicicleta in bicicletas %}
+    <div class="bicicleta-card">
+        <img src="/static/images/bike1.png" alt="{{ bicicleta.marca }} {{ bicicleta.modelo }}" class="bicicleta-img">
+        <div class="bicicleta-info">
+            <h3 class="bicicleta-title">{{ bicicleta.marca }} {{ bicicleta.modelo }}</h3>
+            <p>Tipo: {{ bicicleta.tipo }}</p>
+            <p>Color: {{ bicicleta.color }}</p>
+            <p class="bicicleta-price">${{ bicicleta.precio_hora }}/hora</p>
+            <a href="{{ url_for('detalle_bicicleta', id=bicicleta.id) }}" class="btn">Ver Detalles</a>
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('alquilar', bicicleta_id=bicicleta.id) }}" class="btn btn-success">Alquilar</a>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="card">
+        <div class="card-body">
+            <p>No hay bicicletas disponibles con los filtros seleccionados.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

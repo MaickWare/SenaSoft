@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo Evento - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Crear Nuevo Evento</h1>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="titulo" class="form-label">Título del Evento</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" required>
+    </div>
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha y Hora</label>
+        <input type="datetime-local" class="form-control" id="fecha" name="fecha" required>
+    </div>
+    <div class="mb-3">
+        <label for="lugar" class="form-label">Lugar</label>
+        <input type="text" class="form-control" id="lugar" name="lugar" required>
+    </div>
+    <button type="submit" class="btn btn-success">Crear Evento</button>
+    <a href="{{ url_for('admin_eventos') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva Bicicleta - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Crear Nueva Bicicleta</h1>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="modelo" class="form-label">Modelo</label>
+        <input type="text" class="form-control" id="modelo" name="modelo" required>
+    </div>
+    <div class="mb-3">
+        <label for="marca" class="form-label">Marca</label>
+        <input type="text" class="form-control" id="marca" name="marca" required>
+    </div>
+    <div class="mb-3">
+        <label for="tipo" class="form-label">Tipo</label>
+        <input type="text" class="form-control" id="tipo" name="tipo" required>
+    </div>
+    <div class="mb-3">
+        <label for="color" class="form-label">Color</label>
+        <input type="text" class="form-control" id="color" name="color" required>
+    </div>
+    <div class="mb-3">
+        <label for="precio_hora" class="form-label">Precio por Hora</label>
+        <input type="number" class="form-control" id="precio_hora" name="precio_hora" required>
+    </div>
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="latitud" class="form-label">Latitud</label>
+        <input type="text" class="form-control" id="latitud" name="latitud" required>
+    </div>
+    <div class="mb-3">
+        <label for="longitud" class="form-label">Longitud</label>
+        <input type="text" class="form-control" id="longitud" name="longitud" required>
+    </div>
+    <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" required>
+    </div>
+    <div class="mb-3">
+        <label for="imagen_url" class="form-label">URL de Imagen</label>
+        <input type="text" class="form-control" id="imagen_url" name="imagen_url" required>
+    </div>
+    <button type="submit" class="btn btn-success">Crear Bicicleta</button>
+    <a href="{{ url_for('admin_bicicletas') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

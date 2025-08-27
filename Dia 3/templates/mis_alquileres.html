@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Alquileres - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Mis Alquileres</h1>
+
+{% if alquileres %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Bicicleta</th>
+            <th>Fecha Inicio</th>
+            <th>Horas</th>
+            <th>Costo Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alquiler in alquileres %}
+        <tr>
+            <td>{{ alquiler.bicicleta.marca }} {{ alquiler.bicicleta.modelo }}</td>
+            <td>{{ alquiler.fecha_inicio.strftime('%d/%m/%Y %H:%M') }}</td>
+            <td>{{ alquiler.horas_alquiler }}</td>
+            <td>${{ alquiler.costo_total }}</td>
+            <td>
+                <span class="{% if alquiler.estado == 'activo' %}text-success{% else %}text-secondary{% endif %}">
+                    {{ alquiler.estado|capitalize }}
+                </span>
+            </td>
+            <td>
+                {% if alquiler.estado == 'activo' %}
+                <button class="btn btn-warning btn-sm" onclick="finalizarAlquiler({{ alquiler.id }})">Finalizar</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="card">
+    <div class="card-body">
+        <p>No tienes alquileres registrados.</p>
+        <a href="{{ url_for('bicicletas') }}" class="btn">Ver bicicletas disponibles</a>
+    </div>
+</div>
+{% endif %}
+
+<script>
+function finalizarAlquiler(alquilerId) {
+    if (confirm('¿Estás seguro de que deseas finalizar este alquiler?')) {
+        fetch('/api/finalizar-alquiler/' + alquilerId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert('Error: ' + data.error);
+            } else {
+                alert(data.message);
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al finalizar el alquiler');
+        });
+    }
+}
+</script>
+{% endblock %}

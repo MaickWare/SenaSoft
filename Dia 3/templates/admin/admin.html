@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Administración - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Panel de Administración</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Total Bicicletas</h5>
+                <p class="card-text">{{ total_bicicletas }}</p>
+                <a href="{{ url_for('admin_bicicletas') }}" class="btn btn-primary">Gestionar Bicicletas</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Bicicletas Disponibles</h5>
+                <p class="card-text">{{ bicicletas_disponibles }}</p>
+                <a href="{{ url_for('admin_bicicletas') }}" class="btn btn-primary">Gestionar Bicicletas</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Total Usuarios</h5>
+                <p class="card-text">{{ total_usuarios }}</p>
+                <a href="{{ url_for('admin_usuarios') }}" class="btn btn-primary">Gestionar Usuarios</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Alquileres Activos</h5>
+                <p class="card-text">{{ alquileres_activos }}</p>
+                <a href="{{ url_for('admin_alquileres') }}" class="btn btn-primary">Gestionar Alquileres</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Eventos</h5>
+                <p class="card-text">Gestiona los eventos programados.</p>
+                <a href="{{ url_for('admin_eventos') }}" class="btn btn-primary">Gestionar Eventos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Crear Nuevo Evento</h5>
+                <p class="card-text">Agrega un nuevo evento a la plataforma.</p>
+                <a href="{{ url_for('nuevo_evento') }}" class="btn btn-primary">Crear Evento</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Reporte General</h5>
+                <p class="card-text">Ganancias mensuales generadas.</p>
+                <a href="{{ url_for('reportes') }}" class="btn btn-primary">Ver Reportes</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

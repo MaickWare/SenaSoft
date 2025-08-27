@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Todos los Alquileres - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Todos los Alquileres</h1>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Bicicleta</th>
+                    <th>Fecha Inicio</th>
+                    <th>Horas</th>
+                    <th>Costo Total</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alquiler in alquileres %}
+                <tr>
+                    <td>{{ alquiler.id }}</td>
+                    <td>{{ alquiler.usuario.nombre }}</td>
+                    <td>{{ alquiler.bicicleta.marca }} {{ alquiler.bicicleta.modelo }}</td>
+                    <td>{{ alquiler.fecha_inicio.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td>{{ alquiler.horas_alquiler }}</td>
+                    <td>${{ alquiler.costo_total }}</td>
+                    <td>
+                        <span class="{% if alquiler.estado == 'activo' %}text-success{% else %}text-secondary{% endif %}">
+                            {{ alquiler.estado|capitalize }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

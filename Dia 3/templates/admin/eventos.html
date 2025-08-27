@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Eventos - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Gestión de Eventos</h1>
+
+<a href="{{ url_for('nuevo_evento') }}" class="btn btn-success mb-3">Crear Nuevo Evento</a>
+
+{% if eventos %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Lugar</th>
+            <th>Participantes</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for evento in eventos %}
+        <tr>
+            <td>{{ evento.titulo }}</td>
+            <td>{{ evento.descripcion }}</td>
+            <td>{{ evento.fecha.strftime('%d/%m/%Y %H:%M') }}</td>
+            <td>{{ evento.lugar }}</td>
+            <td>
+                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#participantesModal{{ evento.id }}">
+                    Ver Participantes ({{ evento.participantes|length }})
+                </button>
+            </td>
+            <td>
+                <form action="{{ url_for('eliminar_evento', id=evento.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">
+    No hay eventos creados aún.
+</div>
+{% endif %}
+
+{% for evento in eventos %}
+<div class="modal fade" id="participantesModal{{ evento.id }}" tabindex="-1" aria-labelledby="participantesModalLabel{{ evento.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="participantesModalLabel{{ evento.id }}">Participantes: {{ evento.titulo }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if evento.participantes %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Documento</th>
+                                    <th>Fecha de Inscripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for participante in evento.participantes %}
+                                <tr>
+                                    <td>{{ participante.usuario.nombre }}</td>
+                                    <td>{{ participante.usuario.email }}</td>
+                                    <td>{{ participante.usuario.telefono or 'No proporcionado' }}</td>
+                                    <td>{{ participante.usuario.documento }}</td>
+                                    <td>{{ participante.usuario.created_at.strftime('%d/%m/%Y') }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        No hay participantes inscritos en este evento aún.
+                    </div>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

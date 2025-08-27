@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Eventos - BiciSena{% endblock %}
+
+{% block content %}
+<h1>Eventos de BiciSena</h1>
+
+{% if eventos %}
+<div class="row">
+    {% for evento in eventos %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ evento.titulo }}</h5>
+                <p class="card-text">{{ evento.descripcion }}</p>
+                <p class="card-text">
+                    <strong>Fecha:</strong> {{ evento.fecha.strftime('%d/%m/%Y %H:%M') }}
+                </p>
+                <p class="card-text">
+                    <strong>Lugar:</strong> {{ evento.lugar }}
+                </p>
+                
+                {% if 'user_id' in session %}
+                <form action="{{ url_for('registrar_evento', evento_id=evento.id) }}" method="POST">
+                    <button type="submit" class="btn btn-success">Registrarme en este evento</button>
+                </form>
+                {% else %}
+                <div class="alert alert-info">
+                    <a href="{{ url_for('login') }}">Inicia sesión</a> para registrarte en este evento.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    No hay eventos programados en este momento.
+</div>
+{% endif %}
+{% endblock %}
